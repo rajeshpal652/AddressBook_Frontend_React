@@ -11,6 +11,11 @@ import logout from "../../assets/logout.png";
 const Home = (props) => {
   const [contactArray, setContactArray] = useState([]);
 
+  useEffect(() => {
+    console.log("homepage");
+    getAllContacts();
+  }, []);
+
   const getAllContacts = () => {
     AddressBookService.getAllContacts()
       .then((contact) => {
@@ -21,11 +26,6 @@ const Home = (props) => {
         console.log("err after", err);
       });
   };
-
-  useEffect(() => {
-    console.log("homepage");
-    getAllContacts();
-  }, []);
 
   return (
     <div>
@@ -38,8 +38,10 @@ const Home = (props) => {
             <span className="address-text address-book">BOOK</span>
           </div>
         </div>
-        <div  className="logout">
-          <Link to={"/"}><img id="logout" src={logout} alt="logout_logo" /></Link>
+        <div className="logout">
+          <Link to={"/"}>
+            <img id="logout" src={logout} alt="logout_logo" />
+          </Link>
         </div>
       </header>
       <div className="main-content">

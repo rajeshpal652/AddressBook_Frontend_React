@@ -6,11 +6,7 @@ import { useState, useEffect } from "react";
 import AddressBookService from "../../services/addressbook-service";
 import states from "../../assets/states";
 
-
 const AddressBookForm = (props) => {
-  
-  const [state, setState] = useState([]);
-  const [city, setCity] = useState([]);
 
   let initialValue = {
     name: "",
@@ -28,10 +24,11 @@ const AddressBookForm = (props) => {
       city: "",
       state: "",
       zipCode: "",
-    },
+    }
   };
-
   const [formValue, setForm] = useState(initialValue);
+  const [state, setState] = useState([]);
+  const [city, setCity] = useState([]);
   const params = useParams();
 
   useEffect(() => {
@@ -46,10 +43,12 @@ const AddressBookForm = (props) => {
   }, []);
 
   const handleState = (event) => {
-    const citiesOfState= states.find(state => state.name === event.target.value).city
+    const citiesOfState = states.find(
+      (state) => state.name === event.target.value
+    ).city;
     setCity(citiesOfState);
     changeValue(event);
-  }
+  };
 
   const getDataById = (id) => {
     AddressBookService.getContact(id)
@@ -62,11 +61,18 @@ const AddressBookForm = (props) => {
       });
   };
 
+  const changeValue = (event) => {
+    console.log("Event in change Value  :  " + event.target.name);
+    setForm({ ...formValue, [event.target.name]: event.target.value });
+  };
+
   const setData = (object) => {
-    console.log(object);
+    const citiesOfState = states.find(
+      (state) => state.name === object.state
+    ).city;
+    setCity(citiesOfState);
     setForm({
       ...formValue,
-      ...object,
       id: object.personId,
       name: object.name,
       address: object.address,
@@ -76,10 +82,6 @@ const AddressBookForm = (props) => {
       phoneNumber: object.phoneNumber,
       isUpdate: true,
     });
-  };
-
-  const changeValue = (event) => {
-    setForm({ ...formValue, [event.target.name]: event.target.value });
   };
 
   // const validData = async () => {
@@ -148,7 +150,6 @@ const AddressBookForm = (props) => {
           );
           if (answer === true) {
             alert("Data updated successfully!");
-            // props.history.push("");
             console.log(data);
             reset();
           } else {
@@ -163,7 +164,6 @@ const AddressBookForm = (props) => {
         .then((response) => {
           console.log(response);
           alert("Data Added successfully!!", response);
-          // props.history.push("");
           reset();
         })
         .catch((error) => {
@@ -174,12 +174,14 @@ const AddressBookForm = (props) => {
   };
 
   const reset = () => {
+    console.log("Formvalue id in reset function" + formValue.id);
     setForm({
       ...initialValue,
-      id: formValue.id,
-      isUpdate: formValue.isUpdate,
+      // id: formValue.id
+      // isUpdate: formValue.isUpdate,
     });
-    console.log(formValue);
+    
+    
   };
 
   return (
@@ -260,28 +262,6 @@ const AddressBookForm = (props) => {
             </div>
           </div>
           <div className="row-content location-row">
-            {/* <div className="state-row">
-              <label className="label text" htmlFor="state">
-                State
-              </label>
-              <select
-                id="state"
-                value={formValue.state}
-                onChange={changeValue}
-                name="state"
-              >
-                <option value="" disabled selected hidden>
-                  Select State
-                </option>
-                <option value="Karnataka">Karnataka</option>
-                <option value="Maharastra">Maharastra</option>
-                <option value="Kerala">Kerala</option>
-              </select>
-              <div className="error" id="zip-error">
-                {formValue.error.state}
-              </div>
-            </div> */}
-
             <div className="state-row">
               <label className="label text" htmlFor="state">
                 State
@@ -292,19 +272,16 @@ const AddressBookForm = (props) => {
                 onChange={(event) => handleState(event)}
                 name="state"
               >
-                <option value="0" >
-                  Select State
-                </option>
-                {
-                  state &&
-                  state !== undefined ?
-                  state.map((states,index) => {
-                    return(
-                      <option key={index} value={states.name}>{states.name}</option>
-                    )
-                  })
-                  :"No State"
-                }
+                <option value="0">Select State</option>
+                {state && state !== undefined
+                  ? state.map((states, index) => {
+                      return (
+                        <option key={index} value={states.name}>
+                          {states.name}
+                        </option>
+                      );
+                    })
+                  : "No State"}
               </select>
               <div className="error" id="zip-error">
                 {formValue.error.state}
@@ -321,46 +298,21 @@ const AddressBookForm = (props) => {
                 onChange={changeValue}
                 name="city"
               >
-                <option value="0" >
-                  Select City
-                </option>
-                {
-                  city &&
-                  city !== undefined ?
-                  city.map((cities,index) => {
-                    return(
-                      <option key={index} value={cities}>{cities}</option>
-                    )
-                  })
-                  :"No City"
-                }
+                <option value="0">Select City</option>
+                {city && city !== undefined
+                  ? city.map((cities, index) => {
+                      return (
+                        <option key={index} value={cities}>
+                          {cities}
+                        </option>
+                      );
+                    })
+                  : "No City"}
               </select>
               <div className="error" id="zip-error">
                 {formValue.error.city}
               </div>
             </div>
-
-            {/* <div>
-              <label className="label text" htmlFor="city">
-                City
-              </label>
-              <select
-                id="city"
-                value={formValue.city}
-                onChange={changeValue}
-                name="city"
-              >
-                <option value="" disabled selected hidden>
-                  Select City
-                </option>
-                <option value="Bangalore">Bangalore</option>
-                <option value="Mumbai">Mumbai</option>
-                <option value="Cochin">Cochin</option>
-              </select>
-              <div className="error" id="zip-error">
-                {formValue.error.city}
-              </div>
-            </div> */}
 
             <div>
               <label className="label text" htmlFor="zip">

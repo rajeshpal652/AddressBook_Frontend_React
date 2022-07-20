@@ -2,7 +2,7 @@ import deleteIcon from "../../assets/icons/delete-black-18dp.svg";
 import React, { useState } from "react";
 import editIcon from "../../assets/icons/create-black-18dp.svg";
 import "../home/home.css";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import AddressBookService from "../../services/addressbook-service";
 
@@ -10,29 +10,22 @@ const Display = (props) => {
   const [contactArray, setContactArray] = useState([]);
   const [order, setOrder] = useState("ASC");
 
-const sorting = (column) => {
-  
-  if (order === "ASC") {
-    const sorted = [...contactArray].sort((a, b) => 
-    a[column].toLowerCase() > b[column].toLowerCase() ? 1 : -1);
-    setContactArray(sorted);
-    setOrder("DSC");
-  }
-  if (order === "DSC") {
-    const sorted = [...contactArray].sort((a, b) => 
-    a[column].toLowerCase() < b[column].toLowerCase() ? 1 : -1);
-    setContactArray(sorted);
-    setOrder("ASC");
-  }
-};
-
-  // let contactArray = [];
-
-  // const remove = (id) => {
-  //     console.log("deleted id is " + id);
-  //     AddressBookService.deleteContact(id);
-  //     // window.location.reload();
-  // }
+  const sorting = (column) => {
+    if (order === "ASC") {
+      const sorted = [...contactArray].sort((a, b) =>
+        a[column].toLowerCase() > b[column].toLowerCase() ? 1 : -1
+      );
+      setContactArray(sorted);
+      setOrder("DSC");
+    }
+    if (order === "DSC") {
+      const sorted = [...contactArray].sort((a, b) =>
+        a[column].toLowerCase() < b[column].toLowerCase() ? 1 : -1
+      );
+      setContactArray(sorted);
+      setOrder("ASC");
+    }
+  };
 
   const remove = (personId) => {
     var answer = window.confirm(
@@ -58,12 +51,7 @@ const sorting = (column) => {
       .then((contact) => {
         console.log(contact);
         console.log("data after get", Array.from(contact.data.data));
-        // setEmployeeArray({...employeeArray, employeeDataArray: emp.data.data})
-        // console.log(employeeDataArray);
-
-        // contactArray = contact.data.data;
         setContactArray(contact.data.data);
-        console.log(contact.data.data);
       })
 
       .catch((err) => {

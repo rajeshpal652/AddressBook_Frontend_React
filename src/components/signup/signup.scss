@@ -1,0 +1,30 @@
+.signup{
+    width: 280px;
+    
+    .firstName{
+        width: 100%;
+        margin-top: 40px;
+        margin-left: 5px;
+    }
+    .lastName{
+        width: 100%;
+        margin-top: 40px;
+        margin-left: 5px;
+    }
+    .emailInput{
+        width: 280px;
+        margin-top: 20px;
+        margin-left: 5px;
+    }
+    .password{
+        width: 280px;
+        margin-top: 20px;
+        margin-left: 5px;
+    }
+    
+    .signupButton{
+        width: 232px;
+        margin-top: 20px;
+        margin-left: 5px;
+    }
+}

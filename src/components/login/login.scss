@@ -1,0 +1,31 @@
+.login{
+
+    
+    .emailfield{
+        width: 232px;
+        
+        margin-top: 10px;
+    }
+    .passwordfield{
+        margin-top: 15px;
+        width: 232px;
+    }
+    .loginbutton{
+        width: 232px;
+        
+    }
+    .mid{
+        margin-left: 8vw;
+
+    }
+   .Buttons{
+       display: flex;
+       width: 232px;
+       height: 37px;
+       
+        .googleButton{
+        margin-left: 25px;
+        }
+       
+   }
+}
